@@ -8,7 +8,7 @@ end
 def word_convertor(word)
   converted_string = ''
   word.length.times do
-    converted_string += ' _ '
+    converted_string += '_'
   end
   converted_string
 end
@@ -18,21 +18,28 @@ def index_finder(letter, word)
   guess = word.gsub(/#{letter}/, '*')
   if guess.include?('*')
     arr = guess.split('')
-    print arr
     arr.each_with_index do |value, index|
-      if value == "*"
-        to_change.push(index)
-      end
+      to_change.push(index) if value == '*'
     end
-    to_change
   end
+  to_change
+end
+
+def guess(letter, word, converted_string)
+  to_change = index_finder(letter, word)
+  arr = []
+  if to_change.empty? == false
+    arr = converted_string.split('')
+    to_change.each do |index|
+      arr[index] = "#{letter}"
+    end
+  end
+  arr.join('')
 end
 
 word = word_generator
 converted_string = word_convertor(word)
 
-def guess(letter, word, _converted_string)
-  print index_finder(letter, word)
-end
-
-guess('a', word, converted_string)
+converted_string = guess('a', word, converted_string)
+puts word
+puts converted_string
